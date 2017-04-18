@@ -1,0 +1,314 @@
+﻿<Window x:Class="DNFTester.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:numericUpDown="clr-namespace:DNFTester.Controls.NumericUpDown"
+        xmlns:itb="clr-namespace:DNFTester.Controls.IndexedTextBlock"
+        xmlns:itemValueBox="clr-namespace:DNFTester.Controls.ItemValueBox"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="MinimizeR"
+        MinWidth="640"
+        MinHeight="480"
+        Icon="/DNFTester;component/Images/copy.png"
+        FontSize="14">
+    <Window.Resources>
+        <DataTemplate x:Key="DataTemplate_Mili_2">
+            <itemValueBox:ItemValueBox Value="{Binding}" />
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplate_Mili_1">
+            <ItemsControl ItemsSource="{Binding}"
+                          ItemTemplate="{DynamicResource DataTemplate_Mili_2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DataTemplate_Mur_2">
+            <itemValueBox:ItemValueBox ShowOutput="False" Value="{Binding}" />
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplate_Mur_1">
+            <ItemsControl ItemsSource="{Binding}"
+                          ItemTemplate="{DynamicResource DataTemplate_Mur_2}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+
+        <DataTemplate x:Key="DataTemplate_Level_outputs">
+            <itemValueBox:ItemValueBox ShowState="False" Value="{Binding}" />
+        </DataTemplate>
+
+        <Style TargetType="{x:Type ItemsControl}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}"
+                             Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid>
+                                    <Border HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="Transparent">
+                                        <TextBlock Margin="5"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="{StaticResource mainFormColor}"
+                                                   Text="Нет данных" />
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type itb:IndexedTextBlock}">
+            <Setter Property="IndexSize" Value="9" />
+            <Setter Property="FontFamily" Value="Times New Roman" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+
+    </Window.Resources>
+    <Grid>
+        <Grid x:Name="gdWorkSpace"
+              Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0">
+                <MenuItem Header="Управление">
+                    <MenuItem Header="Выход"
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
+                              Command="{Binding CloseWindow}">
+                        <MenuItem.Icon>
+                            <Image Source="/DNFTester;component/Images/Close32x32.png"
+                                   Width="18"
+                                   Height="18" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Header="Парметры"
+                          Grid.Row="0">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="TextAlignment" Value="Right" />
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="A" />
+                        <numericUpDown:NumericUpDown x:Name="nudQuantityA"
+                                                     Grid.Column="2"
+                                                     Value="{Binding StateCount}"
+                                                     Minimum="1"
+                                                     Maximum="10"
+                                                     Height="25" />
+                        <TextBlock Text="Z"
+                                   Grid.Column="4" />
+                        <numericUpDown:NumericUpDown x:Name="nudQuantityZ"
+                                                     Grid.Column="6"
+                                                     Value="{Binding InputsCount}"
+                                                     Minimum="1"
+                                                     Maximum="10"
+                                                     Height="25" />
+                        <TextBlock Text="W"
+                                   Grid.Column="8" />
+                        <numericUpDown:NumericUpDown x:Name="nudQuantityW"
+                                                     Grid.Column="10"
+                                                     Value="{Binding OutputsCount}"
+                                                     Minimum="1"
+                                                     Height="25"
+                                                     Maximum="10" />
+                        <Button x:Name="btnCreateTable"
+                                Grid.Column="12"
+                                Click="BtnCreateTable_OnClick">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="Задать" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button x:Name="btnMinimaze"
+                                Grid.Column="14"
+                                IsEnabled="{Binding IsMachineInit}"
+                                Click="btnMinimaze_OnClick">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="Минимизировать" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+                <ScrollViewer Grid.Row="1" Margin="10"
+                              HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical"
+                                x:Name="spMili">
+                        <GroupBox Header="Исходные данные"
+                                  x:Name="gbMili">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <GroupBox Header="Автомат (состояние/выход)">
+                                        <ItemsControl ItemsSource="{Binding Machine}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </GroupBox>
+                                    <GroupBox Header="Результат">
+                                        <ItemsControl ItemsSource="{Binding MachineOut}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </GroupBox>
+                                    <TextBlock Text="{Binding BSet}"/>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                        <GroupBox Header="Исходные данные"
+                                  x:Name="gbMure">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Auto">
+                                <StackPanel Orientation="Vertical">
+                                    <GroupBox Header="Выходы">
+                                        <ItemsControl ItemsSource="{Binding Vector}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Level_outputs}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </GroupBox>
+                                    <GroupBox Header="Автомат (состояние/выход)">
+                                        <ItemsControl ItemsSource="{Binding Machine}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </GroupBox>
+                                    <GroupBox Header="Результат">
+                                        <ItemsControl ItemsSource="{Binding MachineOut}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </GroupBox>
+                                    <TextBlock Text="{Binding BSet}"
+                                               Grid.Column="16" />
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Border Grid.Row="2"
+                    BorderThickness="0,1,0,0"
+                    BorderBrush="Gray">
+                <StackPanel Orientation="Horizontal"
+                            Margin="10,5,0,5">
+                    <Image
+                        Source="{Binding ValidationState, Converter={StaticResource ApplicationValidatioStateConvertern}}"
+                        VerticalAlignment="Center"
+                        Width="20"
+                        Height="20" />
+                    <TextBlock Text="{Binding ValidationMessage}"
+                               FontWeight="Bold"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid x:Name="gdStart" >
+            <StackPanel Orientation="Vertical"
+                        Margin="10">
+                <TextBlock Text="Минимизация частичных автоматов"
+                           FontSize="30"
+                           Margin="40,40,40,0"
+                           FontFamily="Times New Roman"
+                           HorizontalAlignment="Center" />
+                <Button x:Name="btStartMili"
+                        Margin="40,40,40,0"
+                        VerticalAlignment="Top"
+                        Click="BtStartMili_OnClick">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="Минимизация частичного автомата Мили"
+                                       FontSize="20" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="btStartMure"
+                        Margin="40,40,40,40"
+                        VerticalAlignment="Top"
+                        Click="BtStartMure_OnClick">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock Text="Минимизация частичного автомата Мура"
+                                       FontSize="20" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap"
+                               Width="300"
+                               Text="Выполнил: студент 4-го курса Соколовский Александр Иванович Научный руководитель: доцент Супрун Валерий Павлович"
+                               FontSize="20"
+                               FontFamily="Times New Roman"
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Bottom"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

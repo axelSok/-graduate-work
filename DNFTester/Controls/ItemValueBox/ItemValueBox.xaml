@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="DNFTester.Controls.ItemValueBox.ItemValueBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:numericUpDown="clr-namespace:DNFTester.Controls.NumericUpDown"
+             Background="Transparent"
+             BorderThickness="1"
+             BorderBrush="Black"
+             x:Name="Self">
+    <StackPanel Orientation="Horizontal"
+                Margin="3">
+        <numericUpDown:NumericUpDown
+            Minimum="0"
+            Maximum="{Binding ElementName=Self, Path=Value.MaxState}"
+            ShowButtonSpinner="False"
+            Width="25"
+            Value="{Binding ElementName=Self, Path=Value.State}"
+            Visibility="{Binding ElementName=Self, Path=ShowState, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <TextBlock Text="/" 
+                   FontSize="20">
+            <TextBlock.Visibility>
+                <MultiBinding Converter="{StaticResource TwoBoolToVisibilityConverter}">
+                    <Binding ElementName="Self"
+                            Path="ShowOutput" />
+                    <Binding ElementName="Self"
+                            Path="ShowState" />
+                    </MultiBinding>
+            </TextBlock.Visibility>
+        </TextBlock>
+        <numericUpDown:NumericUpDown
+            Minimum="0"
+            Maximum="{Binding ElementName=Self, Path=Value.MaxOutput}"
+            Width="25"
+            ShowButtonSpinner="False"
+            Visibility="{Binding ElementName=Self, Path=ShowOutput, Converter={StaticResource BoolToVisibilityConverter}}"
+            Value="{Binding ElementName=Self, Path=Value.Output}" />
+
+    </StackPanel>
+</UserControl>
