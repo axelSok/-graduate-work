@@ -1,9 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using DNFTester.Entities;
 
-namespace DNFTester.Controls.MatrixValueBox
+namespace DNFTester.Controls
 {
     /// <summary>
     /// Interaction logic for MatrixValueBox_.xaml

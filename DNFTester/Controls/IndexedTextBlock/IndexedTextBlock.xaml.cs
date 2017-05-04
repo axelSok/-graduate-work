@@ -1,7 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
-namespace DNFTester.Controls.IndexedTextBlock
+namespace DNFTester.Controls
 {
     /// <summary>
     /// Interaction logic for IndexedTextBox.xaml

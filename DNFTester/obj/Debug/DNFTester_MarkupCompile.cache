@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\STUDING\UNIVERSITY\БГУ(IV)\Курсач\DNFTester\DNFTester\obj\Debug\
+d:\Projects\graduate-work\DNFTester\obj\Debug\
 DNFTester
 none
 false
 DEBUG;TRACE
-E:\STUDING\UNIVERSITY\БГУ(IV)\Курсач\DNFTester\DNFTester\App.xaml
-11-1354793392
+d:\Projects\graduate-work\DNFTester\App.xaml
+121227830969
 11456828404
-371802409278
-16-1666737472
-Controls\BackgroundWorker\CircularProgressBar.xaml;Controls\BackgroundWorker\InvertCircularProgressBar.xaml;Controls\BackgroundWorker\LoadongTextBlock.xaml;Controls\IndexedTextBlock\IndexedTextBlock.xaml;Controls\ItemValueBox\ItemValueBox.xaml;Controls\MatrixValueBox\MatrixValueBox.xaml;Controls\PolinomBlock\PolinomBlockControl.xaml;MainWindow.xaml;ResourceDictionary.xaml;Themes\Generic.xaml;Themes\Styles.xaml;
+38-315879405
+16-218277417
+Controls\BackgroundWorker\CircularProgressBar.xaml;Controls\BackgroundWorker\InvertCircularProgressBar.xaml;Controls\BackgroundWorker\LoadongTextBlock.xaml;Controls\IndexedTextBlock\IndexedTextBlock.xaml;Controls\ItemValueBox\ItemValueBox.xaml;Controls\MatrixValueBox\MatrixValueBox.xaml;Controls\PolinomBlock\PolinomBlockControl.xaml;Controls\StatusBar\StatusBarControl.xaml;MainWindow.xaml;ResourceDictionary.xaml;Themes\Generic.xaml;Themes\Styles.xaml;
 
 False
 

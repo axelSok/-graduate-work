@@ -111,6 +111,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\StatusBar\StatusBarControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,6 +160,9 @@
     <Compile Include="Controls\NumericUpDown\ValidSpinDirections.cs" />
     <Compile Include="Controls\PolinomBlock\PolinomBlockControl.xaml.cs">
       <DependentUpon>PolinomBlockControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatusBar\StatusBarControl.xaml.cs">
+      <DependentUpon>StatusBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToValueConverter.cs" />
     <Compile Include="Converters\CountToBoolConverter.cs" />

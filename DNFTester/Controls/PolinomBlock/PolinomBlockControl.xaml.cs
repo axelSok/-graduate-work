@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DNFTester.Entities;
 
-namespace DNFTester.Controls.PolinomBlock
+namespace DNFTester.Controls
 {
     /// <summary>
     /// Interaction logic for PolinomBlockControl.xaml
@@ -41,7 +41,7 @@ namespace DNFTester.Controls.PolinomBlock
                     {
                         if (newValue[i][j].Value == "-" || newValue[i][j].Value == "0") continue;
                         
-                        spPolinom.Children.Add(new IndexedTextBlock.IndexedTextBlock
+                        spPolinom.Children.Add(new IndexedTextBlock
                         {
                             Text = "X",
                             Index = (j + 1).ToString(),

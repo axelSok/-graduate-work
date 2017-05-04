@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Media;
 using System.Windows;
@@ -21,9 +20,8 @@ namespace DNFTester
         public MainWindow()
         {
             InitializeComponent();
-            CommandManager.RegisterClassCommandBinding(typeof(MainWindow),
-                new CommandBinding(CloseWindow, ExecuteCloseWindowCommand));
-            SetDefaultApplicationState();
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(CloseWindow, ExecuteCloseWindowCommand));
+            //SetDefaultApplicationState();
         }
 
         #region [Properties]
@@ -47,9 +45,7 @@ namespace DNFTester
             }
         }
 
-        public static readonly DependencyProperty ValidationStateProperty =
-            DependencyProperty.Register("ValidationState", typeof(bool), typeof(MainWindow),
-                new PropertyMetadata(true));
+        
 
         public static readonly DependencyProperty VectorProperty =
             DependencyProperty.Register("Vector", typeof(Vector), typeof(MainWindow),
@@ -61,9 +57,7 @@ namespace DNFTester
         public static readonly DependencyProperty BSetProperty = DependencyProperty.Register("BSet",
             typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
-        public static readonly DependencyProperty ValidationMessageProperty =
-            DependencyProperty.Register("ValidationMessage", typeof(string), typeof(MainWindow),
-                new PropertyMetadata(string.Empty));
+        
 
         public static readonly DependencyProperty MachineProperty = DependencyProperty.Register("Machine",
             typeof(Matrix), typeof(MainWindow), new PropertyMetadata(new Matrix(0, 0, 0)));
@@ -128,32 +122,15 @@ namespace DNFTester
             set { SetValue(IsMachineInitProperty, value); }
         }
 
-        public bool ValidationState
-        {
-            get { return (bool)GetValue(ValidationStateProperty); }
-            set { SetValue(ValidationStateProperty, value); }
-        }
+        
 
-        public string ValidationMessage
-        {
-            get { return (string)GetValue(ValidationMessageProperty); }
-            set { SetValue(ValidationMessageProperty, value); }
-        }
+        
 
         #endregion
 
         #region [Methods]
 
-        private void SetDefaultApplicationState()
-        {
-            ValidationState = true;
-            SetValidationMessage(string.Empty);
-        }
-
-        private void SetValidationMessage(string message)
-        {
-            ValidationMessage = string.Format("{0}  {1}", DateTime.Now.ToLongTimeString(), message);
-        }
+        
 
         /// <summary>
         ///     Проверка правильности задания функции
@@ -163,9 +140,9 @@ namespace DNFTester
         {
             if (false) //!(DNFFunction0.Count != countIn0 || DNFFunction1.Count != countIn1))
             {
-                SetValidationMessage("Функция не задана.");
-                ValidationState = false;
-                return ValidationState;
+                //SetValidationMessage("Функция не задана.");
+                //ValidationState = false;
+                //return ValidationState;
             }
 
             // и корректность задания матриц (не пересекаются ли они)
@@ -506,7 +483,7 @@ namespace DNFTester
             };*/
             Vector = new Vector(OutputsCount, StateCount, OutputsCount, 0);
             IsMachineInit = true;
-            SetDefaultApplicationState();
+            //SetDefaultApplicationState();
         }
 
         #endregion

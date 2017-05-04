@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using DNFTester.Entities.AbstractMachine;
 
-namespace DNFTester.Controls.ItemValueBox
+namespace DNFTester.Controls
 {
     /// <summary>
     ///     Interaction logic for MatrixValueBox_.xaml
