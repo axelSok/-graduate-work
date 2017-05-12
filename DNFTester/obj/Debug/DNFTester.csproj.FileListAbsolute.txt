@@ -179,3 +179,4 @@ d:\Projects\graduate-work\DNFTester\obj\Debug\DNFTester.Properties.Resources.res
 d:\Projects\graduate-work\DNFTester\obj\Debug\DNFTester.csproj.GenerateResource.Cache
 d:\Projects\graduate-work\DNFTester\obj\Debug\Controls\StatusBar\StatusBarControl.g.cs
 d:\Projects\graduate-work\DNFTester\obj\Debug\Controls\StatusBar\StatusBarControl.baml
+d:\Projects\graduate-work\DNFTester\obj\Debug\DNFTester.csprojResolveAssemblyReference.cache

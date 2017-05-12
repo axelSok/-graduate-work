@@ -45,34 +45,23 @@ namespace DNFTester
             }
         }
 
-        
 
-        public static readonly DependencyProperty VectorProperty =
-            DependencyProperty.Register("Vector", typeof(Vector), typeof(MainWindow),
-                new PropertyMetadata(new Vector(0, 0, 0, 0)));
 
-        public static readonly DependencyProperty IsMachineInitProperty = DependencyProperty.Register("IsMachineInit",
-            typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty VectorProperty = DependencyProperty.Register("Vector", typeof(Vector), typeof(MainWindow), new PropertyMetadata(new Vector(0, 0, 0, 0)));
 
-        public static readonly DependencyProperty BSetProperty = DependencyProperty.Register("BSet",
-            typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty IsMachineInitProperty = DependencyProperty.Register("IsMachineInit", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
-        
+        public static readonly DependencyProperty BSetProperty = DependencyProperty.Register("BSet", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
-        public static readonly DependencyProperty MachineProperty = DependencyProperty.Register("Machine",
-            typeof(Matrix), typeof(MainWindow), new PropertyMetadata(new Matrix(0, 0, 0)));
+        public static readonly DependencyProperty MachineProperty = DependencyProperty.Register("Machine", typeof(Matrix), typeof(MainWindow), new PropertyMetadata(new Matrix(0, 0, 0)));
 
-        public static readonly DependencyProperty MachineOutProperty = DependencyProperty.Register("MachineOut",
-            typeof(Matrix), typeof(MainWindow), new PropertyMetadata(new Matrix(0, 0, 0)));
+        public static readonly DependencyProperty MachineOutProperty = DependencyProperty.Register("MachineOut", typeof(Matrix), typeof(MainWindow), new PropertyMetadata(new Matrix(0, 0, 0)));
 
-        public static readonly DependencyProperty StateCountProperty = DependencyProperty.Register("StateCount",
-            typeof(int), typeof(MainWindow), new PropertyMetadata(6));
+        public static readonly DependencyProperty StateCountProperty = DependencyProperty.Register("StateCount", typeof(int), typeof(MainWindow), new PropertyMetadata(6));
 
-        public static readonly DependencyProperty OutputsCountProperty = DependencyProperty.Register("OutputsCount",
-            typeof(int), typeof(MainWindow), new PropertyMetadata(2));
+        public static readonly DependencyProperty OutputsCountProperty = DependencyProperty.Register("OutputsCount", typeof(int), typeof(MainWindow), new PropertyMetadata(2));
 
-        public static readonly DependencyProperty InputsCountProperty = DependencyProperty.Register("InputsCount",
-            typeof(int), typeof(MainWindow), new PropertyMetadata(4));
+        public static readonly DependencyProperty InputsCountProperty = DependencyProperty.Register("InputsCount", typeof(int), typeof(MainWindow), new PropertyMetadata(4));
 
         public Vector Vector
         {
@@ -122,15 +111,15 @@ namespace DNFTester
             set { SetValue(IsMachineInitProperty, value); }
         }
 
-        
 
-        
+
+
 
         #endregion
 
         #region [Methods]
 
-        
+
 
         /// <summary>
         ///     Проверка правильности задания функции

@@ -78,7 +78,7 @@
     </Window.Resources>
     <Grid>
         <Grid x:Name="gdWorkSpace"
-              Visibility="Visible">
+              Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -257,7 +257,7 @@
                 <controls:StatusBarControl Message="trtr" Status="False" />
             </Border>
         </Grid>
-        <Grid x:Name="gdStart" Visibility="Collapsed">
+        <Grid x:Name="gdStart">
             <StackPanel Orientation="Vertical"
                         Margin="10">
                 <TextBlock Text="Минимизация частичных автоматов"
