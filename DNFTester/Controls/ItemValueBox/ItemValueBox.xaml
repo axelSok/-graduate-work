@@ -8,11 +8,13 @@
              x:Name="Self">
     <StackPanel Orientation="Horizontal"
                 Margin="3">
+        <TextBlock 
+                   FontSize="20" Text="a"/>
         <numericUpDown:NumericUpDown
             Minimum="0"
             Maximum="{Binding ElementName=Self, Path=Value.MaxState}"
             ShowButtonSpinner="False"
-            Width="25"
+            Width="25" 
             Value="{Binding ElementName=Self, Path=Value.State}"
             Visibility="{Binding ElementName=Self, Path=ShowState, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <TextBlock Text="/" 
@@ -26,6 +28,7 @@
                     </MultiBinding>
             </TextBlock.Visibility>
         </TextBlock>
+        <TextBlock FontSize="20" Text="w"/>
         <numericUpDown:NumericUpDown
             Minimum="0"
             Maximum="{Binding ElementName=Self, Path=Value.MaxOutput}"

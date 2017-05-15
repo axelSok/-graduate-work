@@ -2,13 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="Transparent"
-             Margin="1"
              x:Name="Self">
-    <Border CornerRadius="3"
-            Background="Gainsboro">
-        <TextBlock Width="25"
-                   Height="25"
-                   FontSize="19"
+    <Border>
+        <TextBlock Width="22"
+                   Height="22"
+                   FontSize="16"
                    Focusable="False"
                    Text="{Binding Path=Value.Value, ElementName=Self}"
                    TextAlignment="Center"
