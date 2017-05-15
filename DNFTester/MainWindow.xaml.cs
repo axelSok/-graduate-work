@@ -32,8 +32,6 @@ namespace DNFTester
         private readonly string _defaultSound = Application.StartupPath + "\\attention.wav";
         private string _soundPath;
 
-        private bool _isMurMachine = false;
-
         public string SoundPath
         {
             get { return !string.IsNullOrEmpty(_soundPath) ? _soundPath : _defaultSound; }
@@ -46,11 +44,12 @@ namespace DNFTester
             }
         }
 
-
-
         public static readonly DependencyProperty VectorProperty = DependencyProperty.Register("Vector", typeof(Vector), typeof(MainWindow), new PropertyMetadata(new Vector(0, 0, 0, 0)));
 
-        public static readonly DependencyProperty IsMachineInitProperty = DependencyProperty.Register("IsMachineInit", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsMinimazingProperty = DependencyProperty.Register("IsMinimazing", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsGeneratingProperty = DependencyProperty.Register("IsGenerating", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsMiliProperty = DependencyProperty.Register("IsMili", typeof(bool), typeof(MainWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsMureProperty = DependencyProperty.Register("IsMure", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty BSetProperty = DependencyProperty.Register("BSet", typeof(string), typeof(MainWindow), new PropertyMetadata(string.Empty));
 
@@ -106,45 +105,29 @@ namespace DNFTester
             set { SetValue(InputsCountProperty, value); }
         }
 
-        public bool IsMachineInit
+        public bool IsMili
         {
-            get { return (bool)GetValue(IsMachineInitProperty); }
-            set { SetValue(IsMachineInitProperty, value); }
+            get { return (bool)GetValue(IsMiliProperty); }
+            set { SetValue(IsMiliProperty, value); }
         }
-
-
-
-
-
+        public bool IsMure
+        {
+            get { return (bool)GetValue(IsMureProperty); }
+            set { SetValue(IsMureProperty, value); }
+        }
+        public bool IsMinimazing
+        {
+            get { return (bool)GetValue(IsMinimazingProperty); }
+            set { SetValue(IsMinimazingProperty, value); }
+        }
+        public bool IsGenerating
+        {
+            get { return (bool)GetValue(IsGeneratingProperty); }
+            set { SetValue(IsGeneratingProperty, value); }
+        }
         #endregion
 
         #region [Methods]
-
-
-
-        /// <summary>
-        ///     Проверка правильности задания функции
-        /// </summary>
-        /// <returns></returns>
-        private bool ValidateFunction()
-        {
-            if (false) //!(DNFFunction0.Count != countIn0 || DNFFunction1.Count != countIn1))
-            {
-                //SetValidationMessage("Функция не задана.");
-                //ValidationState = false;
-                //return ValidationState;
-            }
-
-            // и корректность задания матриц (не пересекаются ли они)
-            /*DNFFunctionIntersection = DNFFunction0.Intersection(DNFFunction1);
-            if (DNFFunctionIntersection.Count > 0)
-            {
-                SetValidationMessage("Пересечение ЧБФ-матриц не пусто. Проверьте корректность задания функции.");
-                ValidationState = false;
-                return ValidationState;
-            }*/
-            return true;
-        }
 
         /// <summary>
         ///     Выдать звуковое сообщение
@@ -200,7 +183,7 @@ namespace DNFTester
 
         private void btnMinimaze_OnClick(object sender, RoutedEventArgs e)
         {
-            if (_isMurMachine)
+            if (IsMure)
             {
                 for (int i = 0; i < Machine.Count; i++)
                 {
@@ -423,57 +406,11 @@ namespace DNFTester
             }
         }
 
-        private void BtnCreateTable_OnClick(object sender, RoutedEventArgs e)
+        private void BtnInitialize_OnClick(object sender, RoutedEventArgs e)
         {
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
-            Machine = new Matrix
-            {
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(2, 0, StateCount, OutputsCount),
-                    new ItemValue(3, 1, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(4, 0, StateCount, OutputsCount)
-                }, 1),
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(3, 1, StateCount, OutputsCount),
-                    new ItemValue(5, 1, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount)
-                }, 2),
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(4, 0, StateCount, OutputsCount),
-                    new ItemValue(6, 0, StateCount, OutputsCount),
-                    new ItemValue(3, 0, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount)
-                }, 3),
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(5, 2, StateCount, OutputsCount),
-                    new ItemValue(3, 1, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(1, 0, StateCount, OutputsCount)
-                }, 4),
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(6, 1, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(0, 0, StateCount, OutputsCount)
-                }, 5),
-                new Vector(new ObservableCollection<ItemValue>
-                {
-                    new ItemValue(0, 0, StateCount, OutputsCount),
-                    new ItemValue(0, 2, StateCount, OutputsCount),
-                    new ItemValue(4, 0, StateCount, OutputsCount),
-                    new ItemValue(2, 0, StateCount, OutputsCount)
-                }, 6)
-            };
+            
             Vector = new Vector(OutputsCount, StateCount, OutputsCount, 0);
-            IsMachineInit = true;
-            //SetDefaultApplicationState();
         }
 
         #endregion
@@ -488,11 +425,19 @@ namespace DNFTester
 
         private void BtStartMure_OnClick(object sender, RoutedEventArgs e)
         {
-            _isMurMachine = true;
-            //gdStart.Visibility = Visibility.Collapsed;
             gdWorkSpace.Visibility = Visibility.Visible;
             gbMili.Visibility = Visibility.Collapsed;
             gbMure.Visibility = Visibility.Visible;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Выполнил: студент 5-го курса \nСоколовский Александр Иванович \nНаучный руководитель: доцент \nСупрун Валерий Павлович", "О программе", MessageBoxButton.OK);
         }
     }
 }

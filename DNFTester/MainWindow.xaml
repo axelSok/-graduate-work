@@ -104,26 +104,13 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Минимизация">
-                    <MenuItem Header="Автомат Мили"
-                              Click="BtStartMili_OnClick"/>
-                    <MenuItem Header="Автомат Мура"
-                              Click="BtStartMure_OnClick"/>
-                </MenuItem>
-                <MenuItem Header="Генерация">
-                    <MenuItem Header="Автомат Мили"
-                              Click="BtStartMili_OnClick"/>
-                    <MenuItem Header="Автомат Мура"
-                              Click="BtStartMure_OnClick"/>
-                </MenuItem>
                 <MenuItem Header="Справка">
                     <MenuItem Header="Методы минимизации автоматов"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
                               Command="{Binding CloseWindow}"/>
                     <Separator/>
                     <MenuItem Header="О программе"
-                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
-                              Command="{Binding CloseWindow}">
+                              Click="AboutMenuItem_Click">
                         <MenuItem.Icon>
                             <Image Source="/DNFTester;component/Images/Information.png"
                                    Width="18"
@@ -139,72 +126,49 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
-                    <GroupBox Padding="5" Header="Операции">
+                    <GroupBox Header="Тип операции">
                         <StackPanel>
-                            <RadioButton x:Name="MinMili" GroupName="operations" IsChecked="True">Минимизация автомата Мили</RadioButton>
-                            <RadioButton x:Name="MinMure" GroupName="operations">Минимизация автомата Мура</RadioButton>
-                            <RadioButton x:Name="GenMili" GroupName="operations">Генераци автомата Мили</RadioButton>
-                            <RadioButton x:Name="GenMure" GroupName="operations">Генерация автомата Мура</RadioButton>
+                            <RadioButton x:Name="rbMinimazing" GroupName="operation" IsChecked="{Binding IsMinimazing}">Минимизация</RadioButton>
+                            <RadioButton x:Name="rbGenerating" GroupName="operation" IsChecked="{Binding IsGenerating}">Генерация</RadioButton>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Тип автомата">
+                        <StackPanel>
+                            <RadioButton x:Name="rbMili" GroupName="automate" IsChecked="{Binding IsMili}">Мили</RadioButton>
+                            <RadioButton x:Name="rbMure" GroupName="automate" IsChecked="{Binding IsMure}">Мура</RadioButton>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Парметры">
-                        <Grid>
-                            <Grid.Resources>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="TextAlignment" Value="Right" />
                                     <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="5" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="5" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="5"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="5"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="A" 
-                                       Grid.Column="1"
-                                       Grid.Row="1"/>
-                            <numericUpDown:NumericUpDown x:Name="nudQuantityA"
-                                                     Grid.Column="3"
-                                                     Grid.Row="1"    
+                            </StackPanel.Resources>
+                            <TextBlock Text="|A|=" />
+                            <numericUpDown:NumericUpDown x:Name="nudQuantityA" 
                                                      Value="{Binding StateCount}"
                                                      Minimum="1"
                                                      Maximum="10"
-                                                     Height="25" />
-                            <TextBlock Text="Z" 
-                                       Grid.Column="1"
-                                       Grid.Row="3"/>
+                                                     Margin="0,5,5,5"/>
+                            <TextBlock Text=" |Z|=" />
                             <numericUpDown:NumericUpDown x:Name="nudQuantityZ"
-                                                     Grid.Column="3"
-                                                         Grid.Row="3"
                                                      Value="{Binding InputsCount}"
                                                      Minimum="1"
                                                      Maximum="10"
-                                                     Height="25" />
-                            <TextBlock Text="W"
-                                   Grid.Column="1"
-                                       Grid.Row="5"/>
+                                                     Margin="0,5,5,5"/>
+                            <TextBlock Text=" |W|="/>
                             <numericUpDown:NumericUpDown x:Name="nudQuantityW"
-                                                     Grid.Column="3"
-                                       Grid.Row="5"
                                                      Value="{Binding OutputsCount}"
                                                      Minimum="1"
-                                                     Height="25"
-                                                     Maximum="10" />
-                        </Grid>
+                                                     Maximum="10" 
+                                                     Margin="0,5,5,5"/>
+                        </StackPanel>
                     </GroupBox>
-                    <Button x:Name="btnCreateTable"
-                                Click="BtnCreateTable_OnClick">
+                    <Button x:Name="btnInitialize"
+                            Click="BtnInitialize_OnClick"
+                            Margin="10,20,0,10">
                         <Button.Content>
                             <StackPanel Orientation="Horizontal"
                                             VerticalAlignment="Center">
@@ -419,12 +383,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <TextBlock TextWrapping="Wrap"
-                           Grid.Row="7"
-                           Grid.Column="3"
-                               Width="300"
-                               Text="Выполнил: студент 4-го курса Соколовский Александр Иванович Научный руководитель: доцент Супрун Валерий Павлович"
-                               FontFamily="Times New Roman"/>
+            
 
         </Grid>
     </Grid>
