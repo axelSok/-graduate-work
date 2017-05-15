@@ -9,6 +9,7 @@ using DNFTester.Entities;
 using DNFTester.Entities.AbstractMachine;
 using Application = System.Windows.Forms.Application;
 using Vector = DNFTester.Entities.AbstractMachine.Vector;
+using System.Collections.ObjectModel;
 
 namespace DNFTester
 {
@@ -425,7 +426,7 @@ namespace DNFTester
         private void BtnCreateTable_OnClick(object sender, RoutedEventArgs e)
         {
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
-            /*Machine = new Matrix
+            Machine = new Matrix
             {
                 new Vector(new ObservableCollection<ItemValue>
                 {
@@ -469,7 +470,7 @@ namespace DNFTester
                     new ItemValue(4, 0, StateCount, OutputsCount),
                     new ItemValue(2, 0, StateCount, OutputsCount)
                 }, 6)
-            };*/
+            };
             Vector = new Vector(OutputsCount, StateCount, OutputsCount, 0);
             IsMachineInit = true;
             //SetDefaultApplicationState();
@@ -479,17 +480,19 @@ namespace DNFTester
 
         private void BtStartMili_OnClick(object sender, RoutedEventArgs e)
         {
-            gdStart.Visibility = Visibility.Collapsed;
+            //gdStart.Visibility = Visibility.Collapsed;
             gdWorkSpace.Visibility = Visibility.Visible;
             gbMure.Visibility = Visibility.Collapsed;
+            gbMili.Visibility = Visibility.Visible;
         }
 
         private void BtStartMure_OnClick(object sender, RoutedEventArgs e)
         {
             _isMurMachine = true;
-            gdStart.Visibility = Visibility.Collapsed;
+            //gdStart.Visibility = Visibility.Collapsed;
             gdWorkSpace.Visibility = Visibility.Visible;
             gbMili.Visibility = Visibility.Collapsed;
+            gbMure.Visibility = Visibility.Visible;
         }
     }
 }
