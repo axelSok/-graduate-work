@@ -6,36 +6,73 @@
              BorderThickness="1"
              BorderBrush="Black"
              x:Name="Self">
-    <StackPanel Orientation="Horizontal"
-                Margin="3">
-        <TextBlock 
-                   FontSize="20" Text="a"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock FontSize="30" 
+                   Text="a"
+                   Grid.Column="0"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"/>
         <numericUpDown:NumericUpDown
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Grid.Row="1"
             Minimum="0"
             Maximum="{Binding ElementName=Self, Path=Value.MaxState}"
             ShowButtonSpinner="False"
-            Width="25" 
+            Width="25"
+            Height="25"
             Value="{Binding ElementName=Self, Path=Value.State}"
             Visibility="{Binding ElementName=Self, Path=ShowState, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <TextBlock Text="/" 
-                   FontSize="20">
+                   FontSize="29"
+                   Grid.Column="2"
+                   Grid.Row="0"
+                   Grid.RowSpan="3">
             <TextBlock.Visibility>
                 <MultiBinding Converter="{StaticResource TwoBoolToVisibilityConverter}">
                     <Binding ElementName="Self"
                             Path="ShowOutput" />
                     <Binding ElementName="Self"
                             Path="ShowState" />
-                    </MultiBinding>
+                </MultiBinding>
             </TextBlock.Visibility>
         </TextBlock>
-        <TextBlock FontSize="20" Text="w"/>
+        <TextBlock FontSize="30" 
+                   Text="w"
+                   Grid.Column="3"
+                   Grid.Row="0"
+                   Grid.RowSpan="2">
+            <TextBlock.Visibility>
+                <MultiBinding Converter="{StaticResource TwoBoolToVisibilityConverter}">
+                    <Binding ElementName="Self"
+                            Path="ShowOutput" />
+                    <Binding ElementName="Self"
+                            Path="ShowState" />
+                </MultiBinding>
+            </TextBlock.Visibility>
+        </TextBlock>
         <numericUpDown:NumericUpDown
+            Grid.Column="4"
+            Grid.Row="1"
+            Grid.RowSpan="2"
             Minimum="0"
             Maximum="{Binding ElementName=Self, Path=Value.MaxOutput}"
             Width="25"
+            Height="25"
             ShowButtonSpinner="False"
             Visibility="{Binding ElementName=Self, Path=ShowOutput, Converter={StaticResource BoolToVisibilityConverter}}"
             Value="{Binding ElementName=Self, Path=Value.Output}" />
-
-    </StackPanel>
+    </Grid>
 </UserControl>

@@ -408,27 +408,16 @@ namespace DNFTester
 
         private void BtnInitialize_OnClick(object sender, RoutedEventArgs e)
         {
+            this.tiMinMili.IsSelected = IsMinimazing && IsMili;
+            this.tiMinMura.IsSelected = IsMinimazing && IsMure;
+            this.tiGenMili.IsSelected = IsGenerating && IsMili;
+            this.tiGenMura.IsSelected = IsGenerating && IsMure;
+
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
-            
             Vector = new Vector(OutputsCount, StateCount, OutputsCount, 0);
         }
 
         #endregion
-
-        private void BtStartMili_OnClick(object sender, RoutedEventArgs e)
-        {
-            //gdStart.Visibility = Visibility.Collapsed;
-            gdWorkSpace.Visibility = Visibility.Visible;
-            gbMure.Visibility = Visibility.Collapsed;
-            gbMili.Visibility = Visibility.Visible;
-        }
-
-        private void BtStartMure_OnClick(object sender, RoutedEventArgs e)
-        {
-            gdWorkSpace.Visibility = Visibility.Visible;
-            gbMili.Visibility = Visibility.Collapsed;
-            gbMure.Visibility = Visibility.Visible;
-        }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
