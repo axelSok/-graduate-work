@@ -249,9 +249,6 @@
                                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Auto">
                                     <StackPanel Orientation="Vertical">
-                                        <GroupBox Header="Выходы">
-
-                                        </GroupBox>
                                         <GroupBox Header="Автомат (состояние/выход)">
                                             <StackPanel Orientation="Vertical">
                                                 <ItemsControl ItemsSource="{Binding Vector}"

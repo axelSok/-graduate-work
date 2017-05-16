@@ -414,7 +414,7 @@ namespace DNFTester
             this.tiGenMura.IsSelected = IsGenerating && IsMure;
 
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
-            Vector = new Vector(OutputsCount, StateCount, OutputsCount, 0);
+            Vector = new Vector(StateCount, StateCount, OutputsCount, 0);
         }
 
         #endregion
