@@ -415,6 +415,9 @@ namespace DNFTester
 
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
             Vector = new Vector(StateCount, StateCount, OutputsCount, 0);
+
+            MachineOut = new Matrix(0, 0, 0);
+            BSet = string.Empty;
         }
 
         #endregion
