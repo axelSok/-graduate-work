@@ -4,6 +4,7 @@
         xmlns:numericUpDown="clr-namespace:DNFTester.Controls.NumericUpDown"
         xmlns:controls="clr-namespace:DNFTester.Controls"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        FontFamily="Times New Roman"
         Title="Обработка частичных автоматов"
         MinWidth="640"
         MinHeight="480"
@@ -74,146 +75,229 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </Window.Resources>
-    <Grid x:Name="gdWorkSpace">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="Управление">
-                <MenuItem Header="Печать"
+    <Grid>
+        <Grid x:Name="gdWorkSpace"
+              Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0">
+                <MenuItem Header="Управление">
+                    <MenuItem Header="Печать"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
                               Command="{Binding CloseWindow}">
-                    <MenuItem.Icon>
-                        <Image Source="/DNFTester;component/Images/Close32x32.png"
+                        <MenuItem.Icon>
+                            <Image Source="/DNFTester;component/Images/Close32x32.png"
                                    Width="18"
                                    Height="18" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Выход"
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Выход"
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
                               Command="{Binding CloseWindow}">
-                    <MenuItem.Icon>
-                        <Image Source="/DNFTester;component/Images/Close32x32.png"
+                        <MenuItem.Icon>
+                            <Image Source="/DNFTester;component/Images/Close32x32.png"
                                    Width="18"
                                    Height="18" />
-                    </MenuItem.Icon>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-            </MenuItem>
-            <MenuItem Header="Справка">
-                <MenuItem Header="Методы минимизации автоматов"
+                <MenuItem Header="Справка">
+                    <MenuItem Header="Методы минимизации автоматов"
                           Command="{Binding CloseWindow}"/>
-                <Separator/>
-                <MenuItem Header="О программе"
+                    <Separator/>
+                    <MenuItem Header="О программе"
                               Click="AboutMenuItem_Click">
-                    <MenuItem.Icon>
-                        <Image Source="/DNFTester;component/Images/Information.png"
+                        <MenuItem.Icon>
+                            <Image Source="/DNFTester;component/Images/Information.png"
                                    Width="18"
                                    Height="18" />
-                    </MenuItem.Icon>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-            </MenuItem>
-        </Menu>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical"
+            </Menu>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical"
                         Margin="10">
-                <GroupBox Header="Тип операции">
-                    <StackPanel>
-                        <RadioButton x:Name="rbMinimazing" GroupName="operation" IsChecked="{Binding IsMinimazing}">Минимизация</RadioButton>
-                        <RadioButton x:Name="rbGenerating" GroupName="operation" IsChecked="{Binding IsGenerating}">Генерация</RadioButton>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Header="Тип автомата">
-                    <StackPanel>
-                        <RadioButton x:Name="rbMili" GroupName="automate" IsChecked="{Binding IsMili}">Мили</RadioButton>
-                        <RadioButton x:Name="rbMure" GroupName="automate" IsChecked="{Binding IsMure}">Мура</RadioButton>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Header="Парметры">
-                    <Grid>
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="TextAlignment" Value="Right" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="|A|=" />
-                        <TextBlock Text="|Z|=" 
+                    <GroupBox Header="Тип операции">
+                        <StackPanel>
+                            <RadioButton x:Name="rbMinimazing" GroupName="operation" IsChecked="{Binding IsMinimazing}">Минимизация</RadioButton>
+                            <RadioButton x:Name="rbGenerating" GroupName="operation" IsChecked="{Binding IsGenerating}">Генерация</RadioButton>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Тип автомата">
+                        <StackPanel>
+                            <RadioButton x:Name="rbMili" GroupName="automate" IsChecked="{Binding IsMili}">Мили</RadioButton>
+                            <RadioButton x:Name="rbMure" GroupName="automate" IsChecked="{Binding IsMure}">Мура</RadioButton>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Парметры">
+                        <Grid>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextAlignment" Value="Right" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="|A|=" />
+                            <TextBlock Text="|Z|=" 
                                    Grid.Row="2"/>
-                        <TextBlock Text="|W|=" 
+                            <TextBlock Text="|W|=" 
                                    Grid.Row="4"/>
-                        <numericUpDown:NumericUpDown x:Name="nudQuantityA" 
+                            <numericUpDown:NumericUpDown x:Name="nudQuantityA" 
                                                      Value="{Binding StateCount}"
                                                      Minimum="1"
                                                      Maximum="10"
                                                      Grid.Column="1"/>
-                        <numericUpDown:NumericUpDown x:Name="nudQuantityZ"
+                            <numericUpDown:NumericUpDown x:Name="nudQuantityZ"
                                                      Value="{Binding InputsCount}"
                                                      Minimum="1"
                                                      Maximum="10"
                                                      Grid.Row="2"
                                                      Grid.Column="1"/>
-                        <numericUpDown:NumericUpDown x:Name="nudQuantityW"
+                            <numericUpDown:NumericUpDown x:Name="nudQuantityW"
                                                      Value="{Binding OutputsCount}"
                                                      Minimum="1"
                                                      Maximum="10"
                                                      Grid.Row="4"
                                                      Grid.Column="1"/>
-                    </Grid>
-                </GroupBox>
-                <Grid Margin="0,10,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="3"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnInitialize"
+                        </Grid>
+                    </GroupBox>
+                    <Grid Margin="0,10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="3"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="btnInitialize"
                             Grid.Row="0"
                             Click="BtnInitialize_OnClick">
-                        <Button.Content>
-                            <TextBlock Text="Применить параметры"
+                            <Button.Content>
+                                <TextBlock Text="Применить параметры"
                                        Width="100"
                                        TextWrapping="Wrap"
                                        HorizontalAlignment="Center"
                                        TextAlignment="Center"/>
-                        </Button.Content>
-                    </Button>
-                    <Button Click="btnMinimaze_OnClick"
+                            </Button.Content>
+                        </Button>
+                        <Button Click="btnMinimaze_OnClick"
                             Grid.Row="2">
-                        Выполнить
-                    </Button>
-                </Grid>
-            </StackPanel>
+                            Выполнить
+                        </Button>
+                    </Grid>
+                </StackPanel>
 
-            <TabControl Grid.Column="1"
+                <TabControl Grid.Column="1"
                         BorderThickness="1,1,0,0">
-                <TabItem Header="Минимизация Мили"
+                    <TabItem Header="Минимизация Мили"
                          x:Name="tiMinMili">
-                    <ScrollViewer HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Vertical" ScrollViewer.CanContentScroll="True"
+                        <ScrollViewer HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Vertical" ScrollViewer.CanContentScroll="True"
                                 x:Name="spMili">
-                            <GroupBox Header="Исходные данные"
+                                <GroupBox Header="Исходные данные"
                                   x:Name="gbMili">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Auto">
+                                        <StackPanel Orientation="Vertical">
+                                            <GroupBox Header="Автомат (состояние/выход)">
+                                                <ItemsControl ItemsSource="{Binding Machine}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </GroupBox>
+                                            <GroupBox Header="Результат">
+                                                <ItemsControl ItemsSource="{Binding MachineOut}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </GroupBox>
+                                            <TextBlock Text="{Binding BSet}"/>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Минимизация Мура"
+                         x:Name="tiMinMura">
+                        <ScrollViewer HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox Header="Исходные данные"
+                                  x:Name="gbMure">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Auto">
+                                        <StackPanel Orientation="Vertical">
+                                            <GroupBox Header="Автомат (состояние/выход)">
+                                                <StackPanel Orientation="Vertical">
+                                                    <ItemsControl ItemsSource="{Binding Vector}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Level_outputs}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                    </ItemsControl>
+                                                    <ItemsControl ItemsSource="{Binding Machine}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </GroupBox>
+                                            <GroupBox Header="Результат">
+                                                <ItemsControl ItemsSource="{Binding MachineOut}"
+                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                </ItemsControl>
+                                            </GroupBox>
+                                            <TextBlock Text="{Binding BSet}"
+                                               Grid.Column="16" />
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </GroupBox>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Генерация Мили"
+                         x:Name="tiGenMili">
+                        <ScrollViewer HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Vertical" ScrollViewer.CanContentScroll="True">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Auto">
                                     <StackPanel Orientation="Vertical">
-                                        <GroupBox Header="Автомат (состояние/выход)">
+                                        <GroupBox Header="Автомат">
                                             <ItemsControl ItemsSource="{Binding Machine}"
                                                       ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
                                                 <ItemsControl.ItemsPanel>
@@ -223,7 +307,7 @@
                                                 </ItemsControl.ItemsPanel>
                                             </ItemsControl>
                                         </GroupBox>
-                                        <GroupBox Header="Результат">
+                                        <GroupBox Header="Минимальный автомат">
                                             <ItemsControl ItemsSource="{Binding MachineOut}"
                                                       ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
                                                 <ItemsControl.ItemsPanel>
@@ -236,136 +320,109 @@
                                         <TextBlock Text="{Binding BSet}"/>
                                     </StackPanel>
                                 </ScrollViewer>
-                            </GroupBox>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Минимизация Мура"
-                         x:Name="tiMinMura">
-                    <ScrollViewer HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Vertical">
-                            <GroupBox Header="Исходные данные"
-                                  x:Name="gbMure">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Auto">
-                                    <StackPanel Orientation="Vertical">
-                                        <GroupBox Header="Автомат (состояние/выход)">
-                                            <StackPanel Orientation="Vertical">
-                                                <ItemsControl ItemsSource="{Binding Vector}"
-                                                      ItemTemplate="{DynamicResource DataTemplate_Level_outputs}">
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal" />
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-                                                </ItemsControl>
-                                                <ItemsControl ItemsSource="{Binding Machine}"
-                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <StackPanel Orientation="Horizontal" />
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-                                                </ItemsControl>
-                                            </StackPanel>
-                                        </GroupBox>
-                                        <GroupBox Header="Результат">
-                                            <ItemsControl ItemsSource="{Binding MachineOut}"
-                                                      ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                            </ItemsControl>
-                                        </GroupBox>
-                                        <TextBlock Text="{Binding BSet}"
-                                               Grid.Column="16" />
-                                    </StackPanel>
-                                </ScrollViewer>
-                            </GroupBox>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Генерация Мили"
-                         x:Name="tiGenMili">
-                    <ScrollViewer HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Vertical" ScrollViewer.CanContentScroll="True">
-                            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                          HorizontalScrollBarVisibility="Auto">
-                                <StackPanel Orientation="Vertical">
-                                    <GroupBox Header="Автомат">
-                                        <ItemsControl ItemsSource="{Binding Machine}"
-                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Horizontal" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
-                                    </GroupBox>
-                                    <GroupBox Header="Минимальный автомат">
-                                        <ItemsControl ItemsSource="{Binding MachineOut}"
-                                                      ItemTemplate="{DynamicResource DataTemplate_Mili_1}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <StackPanel Orientation="Horizontal" />
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                        </ItemsControl>
-                                    </GroupBox>
-                                    <TextBlock Text="{Binding BSet}"/>
-                                </StackPanel>
-                            </ScrollViewer>
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-                <TabItem Header="Генерация Мура"
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="Генерация Мура"
                          x:Name="tiGenMura">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Vertical">
-                            <GroupBox Header="Выходы">
-                                <ItemsControl ItemsSource="{Binding Vector}"
+                            <StackPanel Orientation="Vertical">
+                                <GroupBox Header="Выходы">
+                                    <ItemsControl ItemsSource="{Binding Vector}"
                                                       ItemTemplate="{DynamicResource DataTemplate_Level_outputs}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
-                            </GroupBox>
-                            <GroupBox Header="Автомат">
-                                <ItemsControl ItemsSource="{Binding Machine}"
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </GroupBox>
+                                <GroupBox Header="Автомат">
+                                    <ItemsControl ItemsSource="{Binding Machine}"
                                                       ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
-                            </GroupBox>
-                            <GroupBox Header="Минимальный автомат">
-                                <ItemsControl ItemsSource="{Binding MachineOut}"
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </GroupBox>
+                                <GroupBox Header="Минимальный автомат">
+                                    <ItemsControl ItemsSource="{Binding MachineOut}"
                                                       ItemTemplate="{DynamicResource DataTemplate_Mur_1}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                </ItemsControl>
-                            </GroupBox>
-                            <TextBlock Text="{Binding BSet}"
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </GroupBox>
+                                <TextBlock Text="{Binding BSet}"
                                                Grid.Column="16" />
-                        </StackPanel>
-                    </ScrollViewer>
-                </TabItem>
-            </TabControl>
-        </Grid>
-        <Border Grid.Row="2"
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+            <Border Grid.Row="2"
                     BorderThickness="0,1,0,0"
                     BorderBrush="Gray">
-            <controls:StatusBarControl Message="" Status="True" />
-        </Border>
+                <controls:StatusBarControl Message="" Status="True" />
+            </Border>
+        </Grid>
+        <Grid x:Name="gdStart"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <TextBlock FontSize="24"
+                           Margin="0,40,0,0"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           FontWeight="Bold">
+                    МИНИСТЕРСТВО ОБРАЗОВАНИЯ РЕСПУБЛИКИ БЕЛАРУСЬ <LineBreak/>
+                    БЕЛОРУССКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ <LineBreak/>
+                    МЕХАНИКО-МАТЕМАТИЧЕСКИЙ ФАКУЛЬТЕТ <LineBreak/>
+                    Кафедра математической кибернетики
+                </TextBlock>
+                <TextBlock FontSize="20"
+                           Margin="40"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center">
+                    СОКОЛОВСКИЙ<LineBreak/>
+                    Александр Иванович
+                </TextBlock>
+                <TextBlock FontSize="24"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20">
+                    ГЕНЕРАЦИЯ И МИНИМИЗАЦИЯ ПСЕВДОСЛУЧАЙНЫХ <LineBreak/>
+                    ЧАСТИЧНЫХ АВТОМАТОВ МИЛИ И МУРА
+                </TextBlock>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <TextBlock FontSize="20"
+                               FontFamily="Times New Roman"
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Bottom">
+                        Научный руководитель: <LineBreak/>
+                        доцент, кандидат техн. наук  <LineBreak/>
+                        Супрун Валерий Павлович
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <Button x:Name="btStartMure"
+                    Grid.Row="1"
+                        Click="BtStart_OnClick"
+                        VerticalAlignment="Bottom"
+                        FontSize="20"
+                        Width="200">
+                Начать
+            </Button>
+        </Grid>
     </Grid>
 </Window>

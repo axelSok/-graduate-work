@@ -431,5 +431,11 @@ namespace DNFTester
         {
             MessageBox.Show("Выполнил: студент 5-го курса \nСоколовский Александр Иванович \nНаучный руководитель: доцент \nСупрун Валерий Павлович", "О программе", MessageBoxButton.OK);
         }
+
+        private void BtStart_OnClick(object sender, RoutedEventArgs e)
+        {
+            gdStart.Visibility = Visibility.Collapsed;
+            gdWorkSpace.Visibility = Visibility.Visible;
+        }
     }
 }
