@@ -140,29 +140,60 @@ namespace DNFTester
             gdWorkSpace.Visibility = Visibility.Collapsed;
         }
 
-        private void initializeMinimizedMatrix() {
-            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+        private Matrix getMinMiliMatrix() {
+            var res = new Matrix();
+
+            res.Add(new Vector(new List<ItemValue> {
                 new ItemValue(2, 0, 4, 2),
                 new ItemValue(4, 1, 4, 2),
                 new ItemValue(0, 0, 4, 2),
                 new ItemValue(3, 0, 4, 2) }, 1));
-            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+            res.Add(new Vector(new List<ItemValue> {
                 new ItemValue(4, 1, 4, 2),
                 new ItemValue(3, 1, 4, 2),
                 new ItemValue(0, 0, 4, 2),
                 new ItemValue(0, 0, 4, 2) }, 2));
-            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+            res.Add(new Vector(new List<ItemValue> {
                 new ItemValue(3, 2, 4, 2),
                 new ItemValue(4, 1, 4, 2),
                 new ItemValue(4, 0, 4, 2),
                 new ItemValue(1, 0, 4, 2) }, 3));
-            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+            res.Add(new Vector(new List<ItemValue> {
                 new ItemValue(3, 0, 4, 2),
                 new ItemValue(4, 2, 4, 2),
                 new ItemValue(3, 0, 4, 2),
                 new ItemValue(2, 0, 4, 2) }, 4));
+            return res;
+        }
 
-            //_minMureMatrix
+        private Matrix getMinMureMatrix()
+        {
+            var res = new Matrix();
+
+
+            res.Add(new Vector(new List<ItemValue> {
+                new ItemValue(4, 1, 4, 2),
+                new ItemValue(2, 1, 4, 2),
+                new ItemValue(1, 1, 4, 2)}, 1));
+            res.Add(new Vector(new List<ItemValue> {
+                new ItemValue(4, 1, 4, 2),
+                new ItemValue(3, 1, 4, 2),
+                new ItemValue(1, 1, 4, 2) }, 2));
+            res.Add(new Vector(new List<ItemValue> {
+                new ItemValue(1, 2, 4, 2),
+                new ItemValue(2, 2, 4, 2),
+                new ItemValue(1, 2, 4, 2) }, 3));
+            res.Add(new Vector(new List<ItemValue> {
+                new ItemValue(2, 2, 4, 2),
+                new ItemValue(2, 2, 4, 2),
+                new ItemValue(2, 2, 4, 2) }, 4));
+            return res;
+        }
+
+        private void initializeMinimizedMatrix()
+        {
+            _minMiliMatrix = getMinMiliMatrix();
+            _minMureMatrix = getMinMureMatrix();
         }
 
         /// <summary>
@@ -452,21 +483,73 @@ namespace DNFTester
             }
             else
             {
+                initializeMinimizedMatrix();
+
+                var needStateCount = StateCount;
+                var resultMatrix = new Matrix();
                 if (IsMili)
                 {
-                    StateCount = 5;
+                    resultMatrix = getMinMiliMatrix();
+
+                    StateCount = 4;
                     InputsCount = 4;
                     OutputsCount = 2;
-                    var r = minimaze(_minMiliMatrix);
-                    var t = 0;
+
+                    do
+                    {
+                        var random = new Random();
+                        var tempMatrix = resultMatrix;
+                        var randomColIndex = random.Next(0, StateCount);
+                        var randomRowIndexState = random.Next(0, InputsCount);
+                        var newState = random.Next(0, StateCount + 1);
+                        var newOut = random.Next(0, OutputsCount + 1);
+
+                        var stateCol = new Vector(tempMatrix[randomColIndex], StateCount + 1);
+                        stateCol[randomRowIndexState] = new ItemValue(newState, newOut, StateCount + 1, OutputsCount);
+                        if (tempMatrix.Contains(stateCol)) { continue; }
+                        tempMatrix.Add(stateCol);
+                        ++StateCount;
+                        var temp = minimaze(tempMatrix);
+                        var notEqual = 0;
+                        if (temp.Count == _minMiliMatrix.Count)
+                        {
+                            for (var i = 0; i < temp.Count; i++)
+                            {
+                                for (var j = 0; j < InputsCount; j++)
+                                {
+                                    if (temp[i][j].State != _minMiliMatrix[i][j].State || temp[i][j].Output != _minMiliMatrix[i][j].Output)
+                                    {
+                                        ++notEqual;
+                                    }
+                                }
+                            }
+                            if (notEqual != 0)
+                            {
+                                --StateCount;
+                                resultMatrix.RemoveAt(resultMatrix.Count - 1);
+                            }
+                        }
+                        else {
+                            --StateCount;
+                            resultMatrix.RemoveAt(resultMatrix.Count - 1);
+                        }
+                        
+
+                    } while (resultMatrix.Count < needStateCount);
+
+                    MachineOut = _minMiliMatrix;
+                    Machine = resultMatrix;
                 }
                 else
                 {
                     StateCount = 5;
-                    InputsCount = 4;
+                    InputsCount = 3;
                     OutputsCount = 2;
                     var r = minimaze(_minMureMatrix);
                     var t = 0;
+
+                    MachineOut = _minMiliMatrix;
+                    Machine = resultMatrix;
                 }
             }
         }
