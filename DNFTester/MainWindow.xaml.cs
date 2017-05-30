@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Media;
+using System.Printing;
 using System.Windows;
 using System.Windows.Input;
 using DNFTester.Controls.BackgroundWorkerOnGrid;
@@ -140,7 +141,16 @@ namespace DNFTester
             gdWorkSpace.Visibility = Visibility.Collapsed;
         }
 
-        private Matrix getMinMiliMatrix() {
+        private void setTabVisibility()
+        {
+            this.tiMinMili.IsSelected = IsMinimazing && IsMili;
+            this.tiMinMura.IsSelected = IsMinimazing && IsMure;
+            this.tiGenMili.IsSelected = IsGenerating && IsMili;
+            this.tiGenMura.IsSelected = IsGenerating && IsMure;
+        }
+
+        private Matrix getMinMiliMatrix()
+        {
             var res = new Matrix();
 
             res.Add(new Vector(new List<ItemValue> {
@@ -477,6 +487,8 @@ namespace DNFTester
 
         private void btnMinimaze_OnClick(object sender, RoutedEventArgs e)
         {
+            setTabVisibility();
+
             if (IsMinimazing)
             {
                 MachineOut = minimaze(Machine);
@@ -529,11 +541,12 @@ namespace DNFTester
                                 resultMatrix.RemoveAt(resultMatrix.Count - 1);
                             }
                         }
-                        else {
+                        else
+                        {
                             --StateCount;
                             resultMatrix.RemoveAt(resultMatrix.Count - 1);
                         }
-                        
+
 
                     } while (resultMatrix.Count < needStateCount);
 
@@ -542,13 +555,64 @@ namespace DNFTester
                 }
                 else
                 {
-                    StateCount = 5;
+                    resultMatrix = getMinMureMatrix();
+                    StateCount = 4;
                     InputsCount = 3;
                     OutputsCount = 2;
-                    var r = minimaze(_minMureMatrix);
-                    var t = 0;
+                    Vector = new Vector(new List<ItemValue> {
+                        new ItemValue(0, 1, 4, 2),
+                        new ItemValue(0, 1, 4, 2),
+                        new ItemValue(0, 2, 4, 2),
+                        new ItemValue(0, 2, 4, 2)}, 1);
+                    do
+                    {
+                        var random = new Random();
+                        var tempMatrix = resultMatrix;
+                        var randomColIndex = random.Next(0, StateCount);
+                        var randomRowIndexState = random.Next(0, InputsCount);
+                        var newState = random.Next(0, StateCount + 1);
+                        var newOut = random.Next(0, OutputsCount + 1);
 
-                    MachineOut = _minMiliMatrix;
+                        var stateCol = new Vector(tempMatrix[randomColIndex], StateCount + 1);
+                        for (var i = 0; i < stateCol.Count; i++)
+                        {
+                            stateCol[i] = new ItemValue((int)stateCol[i].State, newOut, StateCount + 1, OutputsCount);
+                        }
+                        stateCol[randomRowIndexState] = new ItemValue(newState, newOut, StateCount + 1, OutputsCount);
+                        if (tempMatrix.Contains(stateCol)) { continue; }
+                        this.Vector.Add(new ItemValue(0, newOut, 4, 2));
+                        tempMatrix.Add(stateCol);
+                        ++StateCount;
+                        var temp = minimaze(tempMatrix);
+                        var notEqual = 0;
+                        if (temp.Count == _minMureMatrix.Count)
+                        {
+                            for (var i = 0; i < temp.Count; i++)
+                            {
+                                for (var j = 0; j < InputsCount; j++)
+                                {
+                                    if (temp[i][j].State != _minMureMatrix[i][j].State || temp[i][j].Output != _minMureMatrix[i][j].Output)
+                                    {
+                                        ++notEqual;
+                                    }
+                                }
+                            }
+                            if (notEqual != 0)
+                            {
+                                --StateCount;
+                                resultMatrix.RemoveAt(resultMatrix.Count - 1);
+                                this.Vector.RemoveAt(this.Vector.Count - 1);
+                            }
+                        }
+                        else
+                        {
+                            --StateCount;
+                            resultMatrix.RemoveAt(resultMatrix.Count - 1);
+                            this.Vector.RemoveAt(this.Vector.Count - 1);
+                        }
+                    } while (resultMatrix.Count < needStateCount);
+
+                    MachineOut = _minMureMatrix;
                     Machine = resultMatrix;
                 }
             }
@@ -556,11 +620,7 @@ namespace DNFTester
 
         private void BtnInitialize_OnClick(object sender, RoutedEventArgs e)
         {
-            this.tiMinMili.IsSelected = IsMinimazing && IsMili;
-            this.tiMinMura.IsSelected = IsMinimazing && IsMure;
-            this.tiGenMili.IsSelected = IsGenerating && IsMili;
-            this.tiGenMura.IsSelected = IsGenerating && IsMure;
-
+            setTabVisibility();
             Machine = new Matrix(StateCount, InputsCount, OutputsCount);
             Vector = new Vector(StateCount, StateCount, OutputsCount, 0);
 
@@ -584,6 +644,16 @@ namespace DNFTester
         {
             gdStart.Visibility = Visibility.Collapsed;
             gdWorkSpace.Visibility = Visibility.Visible;
+        }
+
+        private void Print_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.PrintDialog printDialog = new System.Windows.Controls.PrintDialog();
+            if (printDialog.ShowDialog() == true)
+            {
+                printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+                printDialog.PrintVisual(tcPrint, "Распечатать");
+            }
         }
     }
 }

@@ -85,8 +85,7 @@
             <Menu Grid.Row="0">
                 <MenuItem Header="Управление">
                     <MenuItem Header="Печать"
-                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window, AncestorLevel=1}}"
-                              Command="{Binding CloseWindow}">
+                              Click="Print_Click">
                         <MenuItem.Icon>
                             <Image Source="/DNFTester;component/Images/Close32x32.png"
                                    Width="18"
@@ -119,11 +118,12 @@
             </Menu>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="112"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical"
-                        Margin="10">
+                        Margin="10" Grid.ColumnSpan="2">
                     <GroupBox Header="Тип операции">
                         <StackPanel>
                             <RadioButton x:Name="rbMinimazing" GroupName="operation" IsChecked="{Binding IsMinimazing}">Минимизация</RadioButton>
@@ -203,8 +203,9 @@
                     </Grid>
                 </StackPanel>
 
-                <TabControl Grid.Column="1"
-                        BorderThickness="1,1,0,0">
+                <TabControl Grid.Column="2"
+                        BorderThickness="1,1,0,0"
+                            x:Name="tcPrint">
                     <TabItem Header="Минимизация Мили" 
                              x:Name="tiMinMili">
                         <ScrollViewer HorizontalAlignment="Stretch">
