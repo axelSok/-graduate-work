@@ -21,8 +21,10 @@ namespace DNFTester
         public MainWindow()
         {
             InitializeComponent();
+            initializeMinimizedMatrix();
+            setDefaultApplicationState();
+
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(CloseWindow, ExecuteCloseWindowCommand));
-            //SetDefaultApplicationState();
         }
 
         #region [Properties]
@@ -43,6 +45,9 @@ namespace DNFTester
                 }
             }
         }
+
+        private Matrix _minMiliMatrix = new Matrix();
+        private Matrix _minMureMatrix = new Matrix();
 
         public static readonly DependencyProperty VectorProperty = DependencyProperty.Register("Vector", typeof(Vector), typeof(MainWindow), new PropertyMetadata(new Vector(0, 0, 0, 0)));
 
@@ -129,6 +134,37 @@ namespace DNFTester
 
         #region [Methods]
 
+        private void setDefaultApplicationState()
+        {
+            gdStart.Visibility = Visibility.Visible;
+            gdWorkSpace.Visibility = Visibility.Collapsed;
+        }
+
+        private void initializeMinimizedMatrix() {
+            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+                new ItemValue(2, 0, 4, 2),
+                new ItemValue(4, 1, 4, 2),
+                new ItemValue(0, 0, 4, 2),
+                new ItemValue(3, 0, 4, 2) }, 1));
+            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+                new ItemValue(4, 1, 4, 2),
+                new ItemValue(3, 1, 4, 2),
+                new ItemValue(0, 0, 4, 2),
+                new ItemValue(0, 0, 4, 2) }, 2));
+            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+                new ItemValue(3, 2, 4, 2),
+                new ItemValue(4, 1, 4, 2),
+                new ItemValue(4, 0, 4, 2),
+                new ItemValue(1, 0, 4, 2) }, 3));
+            _minMiliMatrix.Add(new Vector(new List<ItemValue> {
+                new ItemValue(3, 0, 4, 2),
+                new ItemValue(4, 2, 4, 2),
+                new ItemValue(3, 0, 4, 2),
+                new ItemValue(2, 0, 4, 2) }, 4));
+
+            //_minMureMatrix
+        }
+
         /// <summary>
         ///     Выдать звуковое сообщение
         /// </summary>
@@ -156,40 +192,15 @@ namespace DNFTester
             return new BoolMatrix(result);
         }
 
-        #endregion
-
-        #region [Commands]
-
-        /// <summary>
-        ///     Закрыть окно. В качестве параметра передается окно, которое необходимо закрыть.
-        /// </summary>
-        public static RoutedUICommand CloseWindow { get; } = new RoutedUICommand("CloseWindow", "closewindow",
-            typeof(MainWindow));
-
-        /// <summary>
-        ///     Закрыть окно.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">В качестве параметра обязано передаваться окно для закрытия.</param>
-        public static void ExecuteCloseWindowCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            var window = e.Parameter as Window;
-            window?.Close();
-        }
-
-        #endregion Commands
-
-        #region [Handlers]
-
-        private void btnMinimaze_OnClick(object sender, RoutedEventArgs e)
+        private Matrix minimaze(Matrix machineIn)
         {
             if (IsMure)
             {
-                for (int i = 0; i < Machine.Count; i++)
+                for (int i = 0; i < machineIn.Count; i++)
                 {
-                    for (int j = 0; j < Machine[i].Count; j++)
+                    for (int j = 0; j < machineIn[i].Count; j++)
                     {
-                        Machine[i][j].Output = Vector[i].Output;
+                        machineIn[i][j].Output = Vector[i].Output;
                     }
                 }
             }
@@ -200,9 +211,9 @@ namespace DNFTester
                 var subResult = new List<List<GroupItem>>();
                 for (var j = 0; j < StateCount; j++)
                 {
-                    if (i != j && i < j && Machine[i].IsCover(Machine[j]))
+                    if (i != j && i < j && machineIn[i].IsCover(machineIn[j]))
                     {
-                        var items = Machine[i].GetIntersection(Machine[j]);
+                        var items = machineIn[i].GetIntersection(machineIn[j]);
                         subResult.Add(new List<GroupItem>(items));
                     }
                     else
@@ -355,7 +366,7 @@ namespace DNFTester
                 var bi = b[i];
                 for (var j = 0; j < bi.Count; j++)
                 {
-                    var vector = Machine[bi[j] - 1];
+                    var vector = machineIn[bi[j] - 1];
                     for (var k = 0; k < vector.Count; k++)
                     {
                         var tempState = (int)vector[k].State;
@@ -372,7 +383,20 @@ namespace DNFTester
                 }
             }
 
-            MachineOut = new Matrix();
+            BSet = "";
+            for (var i = 0; i < b.Count; i++)
+            {
+                BSet += "b" + (i + 1) + "={";
+                for (var j = 0; j < b[i].Count; j++)
+                {
+                    BSet += "a" + b[i][j];
+                    if (j != b[i].Count - 1) BSet += ", ";
+                }
+                BSet += "}";
+                if (i != b.Count - 1) BSet += ", ";
+            }
+
+            var resMachine = new Matrix();
             for (var i = 0; i < b.Count; i++)
             {
                 var listVector = new List<ItemValue>();
@@ -390,19 +414,60 @@ namespace DNFTester
                     var bOut = outs[i][j].Max(item => item);
                     listVector.Add(new ItemValue(bState, bOut, b.Count, OutputsCount));
                 }
-                MachineOut.Add(new Vector(listVector, i + 1));
+                resMachine.Add(new Vector(listVector, i + 1));
             }
-            BSet = "";
-            for (var i = 0; i < b.Count; i++)
+            return resMachine;
+        }
+
+        #endregion
+
+        #region [Commands]
+
+        /// <summary>
+        ///     Закрыть окно. В качестве параметра передается окно, которое необходимо закрыть.
+        /// </summary>
+        public static RoutedUICommand CloseWindow { get; } = new RoutedUICommand("CloseWindow", "closewindow",
+            typeof(MainWindow));
+
+        /// <summary>
+        ///     Закрыть окно.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">В качестве параметра обязано передаваться окно для закрытия.</param>
+        public static void ExecuteCloseWindowCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var window = e.Parameter as Window;
+            window?.Close();
+        }
+
+        #endregion Commands
+
+        #region [Handlers]
+
+        private void btnMinimaze_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (IsMinimazing)
             {
-                BSet += "b" + (i + 1) + "={";
-                for (var j = 0; j < b[i].Count; j++)
+                MachineOut = minimaze(Machine);
+            }
+            else
+            {
+                if (IsMili)
                 {
-                    BSet += "a" + b[i][j];
-                    if (j != b[i].Count - 1) BSet += ", ";
+                    StateCount = 5;
+                    InputsCount = 4;
+                    OutputsCount = 2;
+                    var r = minimaze(_minMiliMatrix);
+                    var t = 0;
                 }
-                BSet += "}";
-                if (i != b.Count - 1) BSet += ", ";
+                else
+                {
+                    StateCount = 5;
+                    InputsCount = 4;
+                    OutputsCount = 2;
+                    var r = minimaze(_minMureMatrix);
+                    var t = 0;
+                }
             }
         }
 

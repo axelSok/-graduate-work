@@ -23,7 +23,16 @@
                    Text="a"
                    Grid.Column="0"
                    Grid.Row="0"
-                   Grid.RowSpan="2"/>
+                   Grid.RowSpan="2">
+            <TextBlock.Visibility>
+                <MultiBinding Converter="{StaticResource TwoBoolToVisibilityConverter}">
+                    <Binding ElementName="Self"
+                            Path="ShowState" />
+                    <Binding ElementName="Self"
+                            Path="ShowState" />
+                </MultiBinding>
+            </TextBlock.Visibility>
+        </TextBlock>
         <numericUpDown:NumericUpDown
             Grid.RowSpan="2"
             Grid.Column="1"
@@ -59,7 +68,7 @@
                     <Binding ElementName="Self"
                             Path="ShowOutput" />
                     <Binding ElementName="Self"
-                            Path="ShowState" />
+                            Path="ShowOutput" />
                 </MultiBinding>
             </TextBlock.Visibility>
         </TextBlock>
